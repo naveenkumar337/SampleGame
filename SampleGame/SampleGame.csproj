@@ -67,6 +67,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="GamePage.html" />
+    <Content Include="SampleGamePage.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
