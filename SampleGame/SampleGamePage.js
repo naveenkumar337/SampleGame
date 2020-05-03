@@ -1,7 +1,10 @@
-﻿var numbers = Array.from(new Array(50), (a, b) => b + 1);
+﻿
+var numbers = Array.from(new Array(50), (a, b) => b + 1);
 var _numbers = Array.from(new Array(50), (a, b) => b + 1);
-//numbers.push(..._numbers);
 
+var player1 = "naveen";
+var player2 = "ajay";
+//Shuffle Array
 var data = shuffle(numbers);
 var _data = shuffle(_numbers);
 function shuffle(arr) {
@@ -17,12 +20,14 @@ function shuffle(arr) {
 function randomNumber(start, end) {
     return Math.floor(Math.random() * (end - start));
 }
+//End Shuffle
+
+//Append to html
 const vartable = document.querySelector('.divtable');
-console.log(vartable);
 var html = "";
+//apply the class name
 getHTML(data,'A');
 getHTML(_data,'B');
-
 function getHTML(data,key) {
     for (let i = 0; i < data.length; i++) {
         if (i === 0) {
@@ -40,31 +45,31 @@ function getHTML(data,key) {
     }
     return html;
 }
-console.log(html);
 vartable.innerHTML = html;
+//end Append to html
 
-var root = document.querySelectorAll('.divtable tr td');
-var rootnode = shuffle(Object.values(root).map(function (key) { return key }));
-var i = 0; root.forEach(function (y) { y.outerHTML = rootnode[i].outerHTML; i++; });
-debugger
-var buttonnodes = document.querySelectorAll('.divtable tr td button');
+//Shuffle the html nodes
+shuffleNodes();
+function shuffleNodes() {
+    var root = document.querySelectorAll('.divtable tr td');
+    var rootnode = shuffle(Object.values(root).map(function (key) { return key }));
+    var i = 0; root.forEach(function (y) { y.outerHTML = rootnode[i].outerHTML; i++; });
+}
+//End Shuffle the html nodes
+
 //PopupMODEL
 var modal = document.getElementById("myModal");
-
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
+var submit = document.getElementsByClassName("submit")[0];
+submit.onclick = function () {
     modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
+   // shuffleNodes();
 }
 //popuCLOSED
+
+
+
+//Button Click and Change the color and conditions 
+var buttonnodes = document.querySelectorAll('.divtable tr td button');
 for (let m = 0; m < buttonnodes.length; m++) {
     buttonnodes[m].addEventListener('click', buttonClick);
 }
@@ -81,23 +86,30 @@ function buttonClick(clicked) {
         } else {
             parentnode.style.backgroundColor = "red";
             clicked.path[0].style.backgroundColor = "red";
-            modal.style.display = "block";
+            showMessage(player2, `Sorry ${player1.toUpperCase()} You Entered Wrong Number`);
         }
 
     } else if (clicked.path[1].className === 'clsB') {
         if (parseInt(clicked.path[1].innerText) === b1 + 1 || parseInt(clicked.path[1].innerText) <= b1) {
             parentnode.style.backgroundColor = "#49ec06";
             clicked.path[0].style.backgroundColor = "#49ec06";
-
-            //var childnode = clicked.path[0];childnode.style.webkitTextEmphasisStyle = 'double-circle';
             b1 = parseInt(clicked.path[1].innerText);
         }
         else {
             clicked.path[0].style.backgroundColor = "red";
             parentnode.style.backgroundColor = "red";
-            modal.style.display = "block";
-            
+            showMessage(player1, `Sorry ${player2.toUpperCase()} You Entered Wrong Number`);
         }
     }
     else { }
+}
+//end Button
+
+//Show Message
+function showMessage(player,message) {
+    var headmessage = document.querySelector('.modal-header h2');
+    headmessage.innerText = "Congrats " + player.toUpperCase();
+    var bodymessge = document.querySelector('.modal-body p');
+    bodymessge.innerText = message;
+    modal.style.display = "block";
 }
